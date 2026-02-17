@@ -5,18 +5,12 @@ import morgan from "morgan";
 
 import { rateLimit } from "express-rate-limit";
 import httpProxy from "express-http-proxy";
+import { setupSecurityMiddleware } from "./middlewares/security.js";
 
 function createApp(): Application {
   const app: Application = express();
 
-  app.use(helmet());
-  app.use(
-    cors({
-      origin: process.env.CORS_ORIGINS?.split(",") || ["http://localhost:3000"],
-      credentials: true,
-    }),
-  );
-  app.use(morgan("dev"));
+  setupSecurityMiddleware(app);
 
   return app;
 }

@@ -1,14 +1,18 @@
 import createApp from "./app.js";
+import config from "./config/index.js";
+import logger from "./utils/logger.js";
 
 async function main() {
+  const port = process.env.PORT || config.port;
+
   try {
     const app = createApp();
 
-    app.listen(8080, () => {
-      console.log("API Gateway is running on port 8080");
+    app.listen(port, () => {
+      logger.info(`API Gateway is running on port ${port}`);
     });
   } catch (err) {
-    console.error("Failed to start server:", err);
+    logger.error("Failed to start server:", err);
   }
 }
 
