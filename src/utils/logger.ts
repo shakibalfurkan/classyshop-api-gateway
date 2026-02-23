@@ -3,18 +3,9 @@ import winston from "winston";
 import DailyRotateFile from "winston-daily-rotate-file";
 import config from "../config/index.js";
 
-const colors = {
-  error: "red",
-  warn: "yellow",
-  info: "green",
-  http: "magenta",
-  debug: "blue",
-};
-
 const consoleFormat = winston.format.combine(
   winston.format.colorize({
     all: true,
-    colors,
   }),
   winston.format.timestamp({ format: "HH:mm:ss" }),
   winston.format.printf(({ timestamp, level, message, ...meta }) => {
@@ -57,17 +48,17 @@ if (!isServerless) {
     }),
   );
 
-  // transports.push(
-  //   new DailyRotateFile({
-  //     filename: path.join(process.cwd(), "logs", "http", "http-%DATE%.log"),
-  //     datePattern: "YYYY-MM-DD",
-  //     level: "http",
-  //     zippedArchive: true,
-  //     maxSize: "50m",
-  //     maxFiles: "7d",
-  //     format: fileFormat,
-  //   }),
-  // );
+  transports.push(
+    new DailyRotateFile({
+      filename: path.join(process.cwd(), "logs", "http", "http-%DATE%.log"),
+      datePattern: "YYYY-MM-DD",
+      level: "http",
+      zippedArchive: true,
+      maxSize: "50m",
+      maxFiles: "7d",
+      format: fileFormat,
+    }),
+  );
 
   // Error logs (warn, error)
   transports.push(
