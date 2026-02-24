@@ -10,6 +10,8 @@ import { requestIdMiddleware } from "./middlewares/requestId.js";
 import config from "./config/index.js";
 import { morganStream } from "./utils/logger.js";
 import { circuitBreakerMiddleware } from "./middlewares/circuitBreaker.js";
+import notFoundHandler from "./middlewares/notFound.js";
+import globalErrorHandler from "./middlewares/globalErrorHandler.js";
 
 function createApp(): Application {
   const app: Application = express();
@@ -69,6 +71,10 @@ function createApp(): Application {
   // 6. CIRCUIT BREAKER (Prevent cascading failures)
   // ==========================================
   app.use(circuitBreakerMiddleware);
+
+  app.use(notFoundHandler);
+
+  app.use(globalErrorHandler);
 
   return app;
 }
