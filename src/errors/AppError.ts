@@ -46,6 +46,13 @@ export class InternalServerError extends AppError {
   }
 }
 
+export class TooManyRequestsError extends AppError {
+  constructor(message = "Too many requests", field?: string) {
+    super(429, message, true, field);
+    this.name = "TooManyRequestsError";
+  }
+}
+
 export class ServiceUnavailableError extends AppError {
   constructor(message = "Service temporarily unavailable", field?: string) {
     super(503, message, true, field);
