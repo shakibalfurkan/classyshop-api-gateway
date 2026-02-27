@@ -3,7 +3,6 @@ import express, { type Application } from "express";
 import morgan from "morgan";
 import compression from "compression";
 
-import httpProxy from "express-http-proxy";
 import { setupSecurityMiddleware } from "./middlewares/security.js";
 import { requestIdMiddleware } from "./middlewares/requestId.js";
 import config from "./config/index.js";
@@ -13,6 +12,7 @@ import notFoundHandler from "./middlewares/notFound.js";
 import globalErrorHandler from "./middlewares/globalErrorHandler.js";
 import { corsMiddleware, handlePreflight } from "./middlewares/cors.js";
 import { globalLimiter } from "./middlewares/rateLimiter.js";
+import { registerProxies } from "./middlewares/proxy.js";
 
 function createApp(): Application {
   const app: Application = express();
@@ -36,6 +36,8 @@ function createApp(): Application {
   app.use(globalLimiter);
 
   app.use(circuitBreakerMiddleware);
+
+  registerProxies(app);
 
   app.use(notFoundHandler);
 

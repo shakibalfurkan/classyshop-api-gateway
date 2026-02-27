@@ -14,6 +14,8 @@ export default {
   circuit_breaker_reset_timeout:
     Number(process.env.CIRCUIT_BREAKER_RESET_TIMEOUT) || 30000,
 
+  proxy_timeout: Number(process.env.PROXY_TIMEOUT) || 30000,
+
   user_service_url: process.env.USER_SERVICE_URL,
 
   allowed_origins:
