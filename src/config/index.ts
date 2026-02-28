@@ -16,7 +16,9 @@ export default {
 
   proxy_timeout: Number(process.env.PROXY_TIMEOUT) || 30000,
 
+  auth_service_url: process.env.AUTH_SERVICE_URL,
   user_service_url: process.env.USER_SERVICE_URL,
+  payment_service_url: process.env.PAYMENT_SERVICE_URL,
 
   allowed_origins:
     process.env.ALLOWED_ORIGINS?.split(",").map((origin) => origin.trim()) ??

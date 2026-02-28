@@ -49,7 +49,7 @@ export const buildProxy = (serviceUrl: string): ReturnType<typeof httpProxy> =>
   });
 
 export const registerProxies = (app: Application): void => {
-  app.use("/auth-service", buildProxy(config.auth_service_url));
-  app.use("/user-service", buildProxy(config.user_service_url));
-  app.use("/payment-service", buildProxy(config.payment_service_url));
+  app.use("/auth-service", buildProxy(config.auth_service_url!));
+  app.use("/user-service", buildProxy(config.user_service_url!));
+  app.use("/payment-service", buildProxy(config.payment_service_url!));
 };
