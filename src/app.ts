@@ -1,4 +1,8 @@
-import express, { type Application } from "express";
+import express, {
+  type Application,
+  type Request,
+  type Response,
+} from "express";
 
 import morgan from "morgan";
 import compression from "compression";
@@ -10,9 +14,10 @@ import { morganStream } from "./utils/logger.js";
 import { circuitBreakerMiddleware } from "./middlewares/circuitBreaker.js";
 import notFoundHandler from "./middlewares/notFound.js";
 import globalErrorHandler from "./middlewares/globalErrorHandler.js";
-import { corsMiddleware, handlePreflight } from "./middlewares/cors.js";
+import { corsMiddleware } from "./middlewares/cors.js";
 import { globalLimiter } from "./middlewares/rateLimiter.js";
 import { registerProxies } from "./middlewares/proxy.js";
+import formatUptime from "./utils/formatUptime.js";
 
 function createApp(): Application {
   const app: Application = express();
@@ -31,13 +36,29 @@ function createApp(): Application {
   }
 
   app.use(corsMiddleware);
-  app.options("*", handlePreflight);
 
   app.use(globalLimiter);
 
   app.use(circuitBreakerMiddleware);
 
   registerProxies(app);
+
+  app.get("/", (_req: Request, res: Response) => {
+    res.status(200).json({
+      success: true,
+      message: `Welcome to the ClassyShop ${config.serviceName} API!`,
+    });
+  });
+
+  app.get("/health", (_req: Request, res: Response) => {
+    res.status(200).json({
+      success: true,
+      message: "Service is healthy",
+      timestamp: new Date().toISOString(),
+      uptime: formatUptime(process.uptime()),
+      service: config.serviceName,
+    });
+  });
 
   app.use(notFoundHandler);
 

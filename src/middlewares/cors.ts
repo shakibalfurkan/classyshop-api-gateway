@@ -52,11 +52,3 @@ export const corsMiddleware = cors({
 
   optionsSuccessStatus: 200,
 });
-
-export const handlePreflight = (
-  req: Request,
-  res: Response,
-  _next: NextFunction,
-): void => {
-  res.sendStatus(200);
-};
