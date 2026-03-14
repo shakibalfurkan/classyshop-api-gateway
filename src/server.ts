@@ -9,7 +9,9 @@ async function main() {
     const app = createApp();
 
     app.listen(port, () => {
-      logger.info(`API Gateway is running on port ${port}`);
+      logger.info(
+        `ClassyShop ${config.serviceName} is running on port ${port}`,
+      );
     });
   } catch (err) {
     logger.error("Failed to start server:", err);

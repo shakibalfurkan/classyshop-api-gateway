@@ -14,6 +14,7 @@ const sharedOptions = {
     proxyReqOpts.headers["X-Request-ID"] = req.headers["x-request-id"];
     proxyReqOpts.headers["X-Forwarded-For"] = req.ip;
     proxyReqOpts.headers["X-Real-IP"] = req.ip;
+    proxyReqOpts.headers["X-Client-Type"] = req.headers["x-client-type"];
     proxyReqOpts.headers["User-Agent"] = req.headers["user-agent"];
 
     return proxyReqOpts;

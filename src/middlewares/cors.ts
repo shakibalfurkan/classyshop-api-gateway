@@ -35,6 +35,7 @@ export const corsMiddleware = cors({
     "Authorization",
     "X-Requested-With",
     "X-Request-ID",
+    "X-Client-Type",
     "X-Internal-Signature",
   ],
 
